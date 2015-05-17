@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8F454AB0-EEF0-4E8C-BB33-6405AB6E13B6}</ProjectGuid>
+    <ProjectGuid>{009F961B-7FBB-41C3-8DDE-5348FC67D888}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LinesCounter</RootNamespace>
-    <AssemblyName>LinesCounter</AssemblyName>
+    <RootNamespace>Mikhailov.Nsudotnet.LinesCounter</RootNamespace>
+    <AssemblyName>Mikhailov.Nsudotnet.LinesCounter</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

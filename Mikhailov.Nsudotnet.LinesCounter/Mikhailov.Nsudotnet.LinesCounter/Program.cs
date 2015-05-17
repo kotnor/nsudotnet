@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace LinesCounter
+namespace Mikhailov.Nsudotnet.LinesCounter
 {
     class Program
     {
@@ -21,12 +21,12 @@ namespace LinesCounter
 
         private static bool IsComment(string line)
         {
-            
+
             if (line.StartsWith("//"))
                 return true;
             if (_inComment)
             {
-                
+
                 if (line.Contains("*/"))
                 {
                     _inComment = false;
@@ -36,7 +36,7 @@ namespace LinesCounter
             }
             if (line.Contains("/*"))
             {
-                
+
                 if (!line.Contains("*/"))
                     _inComment = true;
                 return (line.StartsWith("/*"));
@@ -59,7 +59,7 @@ namespace LinesCounter
                     PrintHelp();
                     return;
             }
-            string[] fileNames =  Directory.GetFiles(_path, _extension, SearchOption.AllDirectories);
+            string[] fileNames = Directory.GetFiles(_path, _extension, SearchOption.AllDirectories);
             foreach (var fileName in fileNames)
             {
                 using (var file = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read)))
