@@ -59,7 +59,7 @@ namespace Mikhailov.Nsudotnet.LinesCounter
                     PrintHelp();
                     return;
             }
-           // Console.ReadLine();
+            // Console.ReadLine();
             string[] fileNames = Directory.GetFiles(_path, _extension, SearchOption.AllDirectories);
             foreach (var fileName in fileNames)
             {

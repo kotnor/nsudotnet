@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{009F961B-7FBB-41C3-8DDE-5348FC67D888}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{A0245988-A5F3-4E87-A7AD-80C1DC8B5A4A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mikhailov.Nsudotnet.LinesCounter</RootNamespace>
     <AssemblyName>Mikhailov.Nsudotnet.LinesCounter</AssemblyName>
@@ -32,9 +32,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
