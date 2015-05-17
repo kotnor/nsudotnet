@@ -59,9 +59,11 @@ namespace Mikhailov.Nsudotnet.LinesCounter
                     PrintHelp();
                     return;
             }
+           // Console.ReadLine();
             string[] fileNames = Directory.GetFiles(_path, _extension, SearchOption.AllDirectories);
             foreach (var fileName in fileNames)
             {
+                _inComment = false;
                 using (var file = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read)))
                 {
                     string line;
@@ -77,6 +79,8 @@ namespace Mikhailov.Nsudotnet.LinesCounter
                 }
             }
             Console.WriteLine("All files have {0} lines", _allCountLines);
+            //Con
+
         }
     }
 }
