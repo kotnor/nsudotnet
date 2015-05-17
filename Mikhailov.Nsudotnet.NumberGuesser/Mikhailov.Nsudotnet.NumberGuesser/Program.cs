@@ -16,7 +16,7 @@ namespace Mikhailov.Nsudotnet.NumberGuesser
         private static string[] _myExpression = {", you are loser", ", dno", ", get out here", ", go home", ", bezdar"};
         static void Main(string[] args)
         {
-            DateTime _sTime, _eTime;
+            DateTime sTime, eTime;
             string str;
             
             Console.WriteLine("Say me your login");
