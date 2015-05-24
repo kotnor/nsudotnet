@@ -13,7 +13,7 @@ namespace Mikhailov.Nsudotnet.NumberGuesser
         private static int _userNumber;
         private static int _effortCount = 0;
         private static int[] _history = new int[1000];
-        private static string[] _myExpression = { ", you are loser", ", dno", ", get out here", ", go home", ", bezdar" };
+        private static string[] _myExpression = { "{0}, you are  loser", "{0}, dno", "Get  out here, {0}", "Go, {0}, home", "{0}, bezdar" };
         static void Main(string[] args)
         {
             DateTime sTime, eTime;
@@ -60,7 +60,8 @@ namespace Mikhailov.Nsudotnet.NumberGuesser
                 }
                 _effortCount++;
                 if (_effortCount % 4 == 0)
-                    Console.WriteLine(_login + _myExpression[rnd.Next(0, 4)]);
+                    //Console.WriteLine(_login + _myExpression[rnd.Next(0, 4)]);
+                    Console.WriteLine(_myExpression[rnd.Next(0, 4)], _login);
             } while (true);
             eTime = DateTime.Now;
 
