@@ -9,44 +9,54 @@ namespace Mikhailov.Nsudotnet.Enigma
 {
     class Program
     {
-        private static void EncryptFile (string inputFileName, string algorithm, string outputFileName)
+        private static void EncryptFile(string inputFileName, string algorithm, string outputFileName)
         {
-            var provider = GetProvider(algorithm);
-            provider.GenerateKey();
-            provider.GenerateIV();
-            using (var inputFileStream = new FileStream(inputFileName, FileMode.Open, FileAccess.Read))
+            using (var provider = GetProvider(algorithm))
             {
-                using (var outputFileStream = new FileStream(outputFileName, FileMode.OpenOrCreate, FileAccess.Write))
+                provider.GenerateKey();
+                provider.GenerateIV();
+                using (var inputFileStream = new FileStream(inputFileName, FileMode.Open, FileAccess.Read))
                 {
-                    WriteKey(provider.Key, provider.IV);              
-                    ICryptoTransform encrypt = provider.CreateEncryptor();
-                    using (var cryptoStream = new CryptoStream(outputFileStream, encrypt, CryptoStreamMode.Write))
+                    using (var outputFileStream = new FileStream(outputFileName, FileMode.OpenOrCreate, FileAccess.Write))
                     {
-                        inputFileStream.CopyTo(cryptoStream);
+                        WriteKey(provider.Key, provider.IV);
+                        using (ICryptoTransform encrypt = provider.CreateEncryptor())
+                        {
+                            using (var cryptoStream = new CryptoStream(outputFileStream, encrypt, CryptoStreamMode.Write))
+                            {
+                                inputFileStream.CopyTo(cryptoStream);
+                            }
+                        }
                     }
                 }
             }
         }
+
         private static void DecryptFile(string encFileName, string algorithm, string keyFile, string inFile)
         {
             byte[] key, iv;
 
-            using (var keyReader = new StreamReader(new FileStream(keyFile, FileMode.Open, FileAccess.Read)))
-            {
-                key = Convert.FromBase64String(keyReader.ReadLine());
-                iv = Convert.FromBase64String(keyReader.ReadLine());
-            }
-            var provider = GetProvider(algorithm);
-            provider.Key = key;
-            provider.IV = iv;
-            using (var instreamFile = new FileStream(encFileName, FileMode.Open, FileAccess.Read))
-            {
-                using (var outstreamFile = new FileStream(inFile, FileMode.OpenOrCreate, FileAccess.Write))
+            using (var keyStream = new FileStream(keyFile, FileMode.Open, FileAccess.Read))
+                using (var keyReader = new StreamReader(keyStream))
                 {
-                    ICryptoTransform decrypt = provider.CreateDecryptor();
-                    using (var cryptostream = new CryptoStream(instreamFile, decrypt, CryptoStreamMode.Read))
+                    key = Convert.FromBase64String(keyReader.ReadLine());
+                    iv = Convert.FromBase64String(keyReader.ReadLine());
+                }
+            using (var provider = GetProvider(algorithm))
+            {
+                provider.Key = key;
+                provider.IV = iv;
+                using (var instreamFile = new FileStream(encFileName, FileMode.Open, FileAccess.Read))
+                {
+                    using (var outstreamFile = new FileStream(inFile, FileMode.OpenOrCreate, FileAccess.Write))
                     {
-                        cryptostream.CopyTo(outstreamFile);
+                        using (ICryptoTransform decrypt = provider.CreateDecryptor())
+                        {
+                            using (var cryptostream = new CryptoStream(instreamFile, decrypt, CryptoStreamMode.Read))
+                            {
+                                cryptostream.CopyTo(outstreamFile);
+                            }
+                        }
                     }
                 }
             }
@@ -55,11 +65,12 @@ namespace Mikhailov.Nsudotnet.Enigma
         public static void WriteKey(byte[] key, byte[] iv)
         {
             string keys = "key.txt";
-            using (var keyWriter = new StreamWriter(new FileStream(keys, FileMode.OpenOrCreate, FileAccess.Write)))
-            {
-                keyWriter.WriteLine(Convert.ToBase64String(key));
-                keyWriter.WriteLine(Convert.ToBase64String(iv));
-            }
+            using (var keyStream = new FileStream(keys, FileMode.OpenOrCreate, FileAccess.Write))
+                using (var keyWriter = new StreamWriter(keyStream))
+                {
+                    keyWriter.WriteLine(Convert.ToBase64String(key));
+                    keyWriter.WriteLine(Convert.ToBase64String(iv));
+                }
         }
         private static SymmetricAlgorithm GetProvider(string algorithm)
         {
